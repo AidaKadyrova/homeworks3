@@ -12,7 +12,10 @@ void Tree::addElement(int val)
     else
     {
         root->addElement(val);
+
     }
+    if(!treeIteratorList.isEmpty())
+        updateIteratorList();
 }
 
 bool Tree::findElement(int val)
@@ -26,3 +29,15 @@ bool Tree::findElement(int val)
         return false;
     }
 }
+
+void Tree::updateIteratorList()
+{
+    int length = treeIteratorList.length();
+    for (int i = 0; i < length; i++)
+    {
+        TreeIterator* t =  treeIteratorList.at(i);
+        t->updateIterator(root);
+    }
+}
+
+

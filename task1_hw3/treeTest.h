@@ -2,7 +2,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include "tree.h"
-#include <iostream>
+
 
 class TreeTest:public QObject
 {
@@ -21,13 +21,16 @@ private slots:
     {
         delete t;
     }
+
     void addElementTest()
     {
+        t->addElement(3);
         t->addElement(1);
         t->addElement(2);
-        t->addElement(3);
-        QVERIFY(t->getRoot()->getValue() == 1);
+        Tree::TreeIterator* it = new Tree::TreeIterator(t);
+        QVERIFY(t->getRoot()->getValue() == 3);
     }
+
     void isEmptyTest()
     {
         t->addElement(2);
@@ -47,23 +50,65 @@ private slots:
     {
         t->addElement(3);
         Tree::TreeIterator* it = new Tree::TreeIterator(t);
-        QVERIFY(it->operator++() == 3);
+        t->treeIteratorList.push_back(it);
+        QVERIFY(t->treeIteratorList.at(0)->operator++() == 3);
     }
 
-    void treeIteratorTest2()
+    void addElementIteratorTest()
     {
+        t->addElement(4);
+        t->addElement(1);
+        t->addElement(6);
         t->addElement(5);
-        t->addElement(3);
-        t->addElement(7);
+
         Tree::TreeIterator* it = new Tree::TreeIterator(t);
-        QVERIFY(it->operator ++() == 5);
+        t->treeIteratorList.push_back(it);
+
+        QVERIFY(it->operator ++() == 4);
+        QVERIFY(it->operator ++() == 1);
+
+        t->addElement(3);
+        t->addElement(2);
+        t->addElement(7);
+
         QVERIFY(it->operator ++() == 3);
+        QVERIFY(it->operator ++() == 2);
+        QVERIFY(it->operator ++() == 6);
+        QVERIFY(it->operator ++() == 5);
         QVERIFY(it->operator ++() == 7);
+    }
+
+    void iteratorListTest()
+    {
+        t->addElement(4);
+        t->addElement(1);
+        t->addElement(6);
+
+        Tree::TreeIterator* it = new Tree::TreeIterator(t);
+        t->treeIteratorList.push_back(it);
+        QVERIFY(t->treeIteratorList.at(0)->operator++() == 4);
+        QVERIFY(t->treeIteratorList.at(0)->operator++() == 1);
+
+        Tree::TreeIterator* it1 = new Tree::TreeIterator(t);
+        t->treeIteratorList.push_back(it1);
+
+        QVERIFY(t->treeIteratorList.at(1)->operator++() == 4);
+
+        t->addElement(2);
+        QVERIFY(t->treeIteratorList.at(0)->operator++() == 2);
+        QVERIFY(t->treeIteratorList.at(1)->operator++() == 1);
+
+        t->addElement(5);
+        QVERIFY(t->treeIteratorList.at(1)->operator++() == 2);
+        QVERIFY(t->treeIteratorList.at(1)->operator++() == 6);
+        QVERIFY(t->treeIteratorList.at(1)->operator++() == 5);
+
     }
 
 
 private:
     Tree *t;
+
 
 
 };

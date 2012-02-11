@@ -48,8 +48,9 @@ public:
 
 
 
-private:
+//private:
     Node* left;
     Node* right;
     int value;
+
 };

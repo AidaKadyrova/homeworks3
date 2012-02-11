@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <iterator>
+#include <QList>
 #include <QStack>
 #include "node.h"
 #include "treeIterator.h"
@@ -40,20 +41,23 @@ public:
     {
         return root;
     }
+
     class TreeIterator
     {
     public:
         TreeIterator(Tree* tree);
         int operator++();
-
+        void updateIterator(Node* r);
 
     private:
         Node* current;
         QStack<Node*> stack;
 
+
     };
 
-
+    QList<TreeIterator*> treeIteratorList;
 private:
+    void updateIteratorList();
     Node* root;
 };
