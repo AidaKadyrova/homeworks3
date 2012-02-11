@@ -11,14 +11,16 @@ QT       -= gui
 TARGET = hw2_task1
 CONFIG   += console
 CONFIG   -= app_bundle
+CONFIG   += qtestlib
 
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += \
     computer.cpp \
     network.cpp
 
 HEADERS += \
     computer.h \
-    network.h
+    network.h \
+    networkTest.h

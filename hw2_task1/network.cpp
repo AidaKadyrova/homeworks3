@@ -1,4 +1,6 @@
 #include "network.h"
+#include <cstdlib>
+#include <ctime>
 
 using namespace network;
 
@@ -13,7 +15,10 @@ int Network::startNetworking() {
     while (!mNetworkIsPwned) {
         std::cout << "new iteration" <<std::endl;
         for (int i = 0; i < mPwnedComputers.size(); i++) {
-            mPwnedComputers[i]->attack();
+
+            srand(time(0));
+            int attackPower = rand() % 100;
+            mPwnedComputers[i]->attack(attackPower);
         }
         updatePwned();
         printStatus();

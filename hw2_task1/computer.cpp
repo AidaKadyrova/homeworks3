@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-void network::Computer::attack() {
+void network::Computer::attack(int attackPower) {
     for (int i = 0; i < mConnections.size(); i++) {
         if (mConnections[i]->isPwned())
             continue;
@@ -12,8 +12,6 @@ void network::Computer::attack() {
             mConnections[i]->setPwned();
         } else
         {
-            srand(time(0));
-            int attackPower = rand() % 100;
             if (targetOS == network::linuxOS)
             {
                 if (attackPower > 70)

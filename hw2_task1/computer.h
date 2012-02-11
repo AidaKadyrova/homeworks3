@@ -49,7 +49,7 @@ public:
     /**
      * infect the computer
      */
-    void attack();
+    void attack(int attackPower);
 private:
     std::string mName;
     network::OS mOS;

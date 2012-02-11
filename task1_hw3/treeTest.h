@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QObject>
 #include <QtTest/QtTest>
 #include "tree.h"
