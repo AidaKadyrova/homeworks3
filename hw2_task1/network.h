@@ -1,13 +1,14 @@
 #pragma once
 #include "computer.h"
 #include <iostream>
+#include "random.h"
 
 namespace network {
 
 class Network
 {
 public:
-    Network() {}
+    Network(Random* r) {myRandom = r;}
     /**
      * add computer to network
      * @param cmp computer to add
@@ -31,5 +32,7 @@ private:
     std::vector<Computer*> mNormalComputers;
     std::vector<Computer*> mPwnedComputers;
     bool mNetworkIsPwned;
+    Random* myRandom;
+
 };
 }

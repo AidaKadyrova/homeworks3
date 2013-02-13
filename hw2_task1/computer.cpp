@@ -14,12 +14,12 @@ void network::Computer::attack(int attackPower) {
         {
             if (targetOS == network::linuxOS)
             {
-                if (attackPower > 70)
+                if (attackPower > 40)
                 {
                     mConnections[i]->setPwned();
                 }
             } else if (targetOS == network::macOS)
-                if (attackPower > 90)
+                if (attackPower > 60)
                 {
                     mConnections[i]->setPwned();
                 }

@@ -1,6 +1,5 @@
 #include "network.h"
-#include <cstdlib>
-#include <ctime>
+#include "random.h"
 
 using namespace network;
 
@@ -16,8 +15,7 @@ int Network::startNetworking() {
         std::cout << "new iteration" <<std::endl;
         for (int i = 0; i < mPwnedComputers.size(); i++) {
 
-            srand(time(0));
-            int attackPower = rand() % 100;
+            int attackPower = myRandom->ran();
             mPwnedComputers[i]->attack(attackPower);
         }
         updatePwned();

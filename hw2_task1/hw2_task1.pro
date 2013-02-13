@@ -23,4 +23,5 @@ SOURCES += \
 HEADERS += \
     computer.h \
     network.h \
-    networkTest.h
+    networkTest.h \
+    random.h
