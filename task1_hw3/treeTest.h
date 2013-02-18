@@ -108,14 +108,6 @@ private slots:
         QVERIFY(*(++it1) == 4);
     }
 
-    void rmpteTreeIteratortest()
-    {
-        t->addElement(1);
-        Tree::TreeIterator it = t->begin();
-        it.deleteCurrent();
-
-        std::cout << *it;
-    }
 
 private:
     Tree *t;
