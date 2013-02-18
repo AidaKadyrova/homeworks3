@@ -1,42 +1,58 @@
 #include "tree.h"
 #include <iostream>
 
-Tree::TreeIterator::TreeIterator(Tree *tree)
+Tree::TreeIterator Tree::TreeIterator::operator++()
 {
-       current = tree->getRoot();
-       stack.push(current);
-}
-
-int Tree::TreeIterator::operator++()
-{
-    if(current != NULL){
-    current = stack.pop();
-    int value = current->getValue();
-    if (current->getRight() != NULL)
-        stack.push(current->getRight());
-    if (current->getLeft() != NULL)
-        stack.push(current->getLeft());
-    if (stack.empty())
-        current = NULL;
-    return value;
-}
-    else return 0;
-
-}
-
-void Tree::TreeIterator::updateIterator(Node *r)
-{
-    if (current != r)
+    if (current != NULL)
     {
-    Node* tempNode = current;
-    stack.clear();
-    current = r;
-    stack.push(current);
-    while(current != tempNode)
-        operator ++();
+        current = next;
+        next = getNext(current);
+        wasDeleted = false;
     }
-
+    return *this;
 }
 
+Node* Tree::TreeIterator::getNext(Node *current)
+{
+    if (current == NULL)
+    {
+        return NULL;
+    }
+    if (current->getRight() != NULL)
+    {
+        current = current->getRight();
+        while (current->getLeft() != NULL)
+        {
+            current = current->getLeft();
+        }
+    } else
+    {
+        if (current->getParent() == NULL)
+        {
+            current = NULL;
+            return NULL;
+        }
+        while (current->getParent()->getRight() == current)
+        {
+            current = current->getParent();
+            if (current->getParent() == NULL)
+            {
+                current = NULL;
+                return NULL;
+            }
+        }
+        current = current->getParent();
+    }
+    return current;
+}
 
+void Tree::TreeIterator::deleteCurrent()
+{
+    if (!wasDeleted)
+    {
+        next = getNext(current);
+        tree->deleteElement(current->getValue());
+        wasDeleted = true;
+    }
+}
 

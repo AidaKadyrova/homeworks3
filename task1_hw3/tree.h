@@ -37,6 +37,8 @@ public:
      * root of the tree
      * @return root of the tree
      */
+    void deleteElement(int val);
+
     Node* getRoot()
     {
         return root;
@@ -45,19 +47,38 @@ public:
     class TreeIterator
     {
     public:
-        TreeIterator(Tree* tree);
-        int operator++();
-        void updateIterator(Node* r);
+        TreeIterator(): current(NULL), next(NULL), tree(NULL), wasDeleted(false) {}
+        TreeIterator(Tree* t, Node *p): current(p), tree(t), wasDeleted(false)
+        {
+            next= getNext(p);
+
+        }
+        TreeIterator operator++();
+        bool operator!=(const TreeIterator &it)
+        {
+            return current != it.current;
+        }
+        int operator*()
+        {
+            if (current != NULL)
+                return current->getValue();
+            else
+                return -1;
+        }
+        void deleteCurrent();
 
     private:
+        Node* getNext(Node *current);
         Node* current;
-        QStack<Node*> stack;
-
+        Node* next;
+        Tree* tree;
+        bool wasDeleted;
 
     };
 
-    QList<TreeIterator*> treeIteratorList;
+    TreeIterator begin();
+    TreeIterator end();
+
 private:
-    void updateIteratorList();
     Node* root;
 };

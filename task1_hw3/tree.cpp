@@ -6,38 +6,41 @@
 void Tree::addElement(int val)
 {
     if (isEmpty())
-    {
         root = new Node(val);
-    }
     else
-    {
         root->addElement(val);
 
-    }
-    if(!treeIteratorList.isEmpty())
-        updateIteratorList();
 }
 
 bool Tree::findElement(int val)
 {
     if (!isEmpty())
-    {
         return root->findElement(val);
-    }
     else
-    {
         return false;
-    }
 }
 
-void Tree::updateIteratorList()
+
+void Tree::deleteElement(int val)
 {
-    int length = treeIteratorList.length();
-    for (int i = 0; i < length; i++)
-    {
-        TreeIterator* t =  treeIteratorList.at(i);
-        t->updateIterator(root);
-    }
+    if (isEmpty())
+        return;
+    Node* tmp = root;
+    root->deleteNode(tmp, val);
 }
 
+
+Tree::TreeIterator Tree::begin()
+{
+    Node *current = root;
+    while (current->getLeft() != NULL)
+        current = current->getLeft();
+
+    return TreeIterator(this, current);
+}
+
+Tree::TreeIterator Tree::end()
+{
+    return TreeIterator(this, NULL);
+}
 

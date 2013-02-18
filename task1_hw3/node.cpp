@@ -10,6 +10,7 @@ void Node::addElement(int val)
         {
             Node* temp = new Node(val);
             this->setLeft(temp);
+            temp->parent = this;
         }
         else
         {
@@ -22,6 +23,7 @@ void Node::addElement(int val)
         {
             Node* temp = new Node(val);
             this->setRight(temp);
+            temp->parent = this;
         }
         else
         {
@@ -53,4 +55,70 @@ bool Node::findElement(int val)
     else
         return false;
 
+}
+
+void Node::deleteNode(Node *&n, int val)
+{
+    if (n == NULL)
+        return;
+    if (n->getValue() < val)
+    {
+        deleteNode(n->right, val);
+        if (n->right != NULL)
+            n->right->parent = n;
+    }
+    else
+        if (n->getValue() > val)
+        {
+            deleteNode(n->left, val);
+            if (n->left != NULL)
+                n->left->parent = n;
+        }
+    else
+        if ((n->getLeft() == NULL) && (n->getRight() == NULL))
+        {
+            delete(n);
+            n = NULL;
+        }
+    else
+        if ((n->getLeft() == NULL) && (n->getRight() != NULL))
+        {
+            Node* tmp = n;
+            n = n->right;
+            delete(tmp);
+        }
+    else
+        if ((n->getLeft() != NULL) && (n->getRight() == NULL))
+        {
+            Node* tmp = n;
+            n = n->left;
+            delete(tmp);
+        }
+    else
+        {
+            Node* tmp = n;
+            n = findLeftest(n->right);
+            n->left = tmp->left;
+            if (n->left != NULL)
+                n->left->parent = n;
+            n->right = tmp->right;
+            if (n->right != NULL)
+                n->right->parent = n;
+            delete(tmp);
+        }
+}
+
+Node* Node::findLeftest(Node *t)
+{
+    Node *parent = NULL;
+    while (t->left != NULL)
+    {
+        parent = t;
+        t = t->left;
+    }
+    if (parent != NULL)
+    {
+        parent->left = NULL;
+    }
+    return t;
 }
